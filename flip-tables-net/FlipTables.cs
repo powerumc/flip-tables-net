@@ -3,27 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace flip_tables_net
+namespace FlipTablesNet
 {
-
-    public static class StringExtensions
-    {
-        public static char CharAt(this string str, int index)
-        {
-            return str[index];
-        }
-    }
 
 /**
  * <pre>
  * ╔═════════════╤════════════════════════════╤══════════════╗
- * ║ Name        │ Function                   │ Author       ║
+ * ║ Name        │ Function                   │ Author     ║
  * ╠═════════════╪════════════════════════════╪══════════════╣
  * ║ Flip Tables │ Pretty-print a text table. │ Jake Wharton ║
  * ╚═════════════╧════════════════════════════╧══════════════╝
  * </pre>
  */
-    public sealed class FlipTable
+    public sealed partial class FlipTable
     {
         private static String EMPTY = "(empty)";
 
@@ -55,7 +47,7 @@ namespace flip_tables_net
                 if (rowData.Length != columns)
                 {
                     throw new ArgumentException(
-                        String.Format("Row {0}'s {1} columns != {2} columns", row + 1, rowData.Length, columns));
+                        $"Row {row + 1}'s {rowData.Length} columns != {columns} columns");
                 }
                 for (int column = 0; column < columns; column++)
                 {
@@ -71,7 +63,7 @@ namespace flip_tables_net
             {
                 emptyWidth += columnWidth;
             }
-            this.emptyWidth = emptyWidth;
+            this.emptyWidth = emptyWidth + 2;
 
             if (emptyWidth < EMPTY.Length)
             { // Make sure we're wide enough for the empty text.
@@ -135,6 +127,14 @@ namespace flip_tables_net
                 //@out.Append("║\n");
                 @out.Append("|\n");
             }
+        }
+    }
+
+    public static class FlipTablesStringExtensions
+    {
+        public static char CharAt(this string str, int index)
+        {
+            return str[index];
         }
     }
 }

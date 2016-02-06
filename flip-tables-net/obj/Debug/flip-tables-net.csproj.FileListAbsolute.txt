@@ -4,3 +4,8 @@ c:\users\umc\documents\visual studio 2015\Projects\flip-tables-net\flip-tables-n
 c:\users\umc\documents\visual studio 2015\Projects\flip-tables-net\flip-tables-net\bin\Debug\flip-tables-net.pdb
 c:\users\umc\documents\visual studio 2015\Projects\flip-tables-net\flip-tables-net\obj\Debug\flip-tables-net.exe
 c:\users\umc\documents\visual studio 2015\Projects\flip-tables-net\flip-tables-net\obj\Debug\flip-tables-net.pdb
+C:\workspace\github\powerumc\flip-tables-net\flip-tables-net\obj\Debug\flip-tables-net.csprojResolveAssemblyReference.cache
+C:\workspace\github\powerumc\flip-tables-net\flip-tables-net\bin\Debug\FlipTablesNet.dll
+C:\workspace\github\powerumc\flip-tables-net\flip-tables-net\bin\Debug\FlipTablesNet.pdb
+C:\workspace\github\powerumc\flip-tables-net\flip-tables-net\obj\Debug\FlipTablesNet.dll
+C:\workspace\github\powerumc\flip-tables-net\flip-tables-net\obj\Debug\FlipTablesNet.pdb
