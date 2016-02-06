@@ -75,16 +75,19 @@ namespace FlipTablesNet
         {
             var builder = new StringBuilder();
             //printDivider(builder, "╔═╤═╗");
-              printDivider(builder, "+=+=+");
-            printData(builder, headers);
-            if (data.Length == 0)
+	        if (data.Length != 0)
+	        {
+		        printDivider(builder, "+=+=+");
+		        printData(builder, headers);
+	        }
+	        if (data.Length == 0)
             {
-                //printDivider(builder, "╠═╧═╣");
-                  printDivider(builder, "+=+=+");
-                //builder.Append('║').Append(pad(emptyWidth, EMPTY)).Append("║\n");
-                builder.Append("|").Append(EMPTY.PadLeft(emptyWidth)).Append("|\n");
-                //printDivider(builder, "╚═══╝");
-                  printDivider(builder, "+===+");
+                ////printDivider(builder, "╠═╧═╣");
+                //  printDivider(builder, "+=+=+");
+                ////builder.Append('║').Append(pad(emptyWidth, EMPTY)).Append("║\n");
+	            builder.Append(EMPTY.PadLeft(0));
+	            ////printDivider(builder, "╚═══╝");
+	            //  printDivider(builder, "+===+");
             }
             else {
                 for (int row = 0; row < data.Length; row++)
@@ -119,7 +122,7 @@ namespace FlipTablesNet
                     @out.Append(column == 0 ? "|" : "|");
                     var cellLines = data[column].Split('\n');
                     lines = Math.Max(lines, cellLines.Length);
-                    var cellLine = line < cellLines.Length ? cellLines[line] : "";
+                    var cellLine = line < cellLines.Length ? cellLines[line] ?? "(null)" : "";
                     //@out.Append(pad(columnWidths[column], cellLine));
                     //@out.Append(cellLine.PadLeft(columnWidths[column]));
                     @out.Append(' ').Append(cellLine.PadLeft(columnWidths[column])).Append(' ');
