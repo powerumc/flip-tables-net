@@ -1,7 +1,7 @@
 flip-tables-net
 ====================
 
-Flip-Tables-Net converted flip-table in Java code, should be make pretty-tables on console.
+Flip-Tables-Net converted from flip-table in Java code, should be make pretty-tables on console.
 
 
 Usage likes Java
