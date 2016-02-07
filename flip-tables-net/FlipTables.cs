@@ -17,10 +17,10 @@ namespace FlipTablesNet
  */
     public sealed partial class FlipTable
     {
-        private static String EMPTY = "(empty)";
+        private static string EMPTY = "(empty)";
 
         /** Create a new table with the specified headers and row data. */
-        public static String Of(String[] headers, String[][] data)
+        public static string Of(string[] headers, string[][] data)
         {
             if (headers == null) throw new NullReferenceException("headers == null");
             if (headers.Length == 0) throw new ArgumentException("Headers must not be empty.");
@@ -28,13 +28,13 @@ namespace FlipTablesNet
             return new FlipTable(headers, data).ToString();
         }
 
-        private String[] headers;
-        private String[][] data;
+        private string[] headers;
+        private string[][] data;
         private int columns;
         private int[] columnWidths;
         private int emptyWidth;
 
-        private FlipTable(String[] headers, String[][] data)
+        private FlipTable(string[] headers, string[][] data)
         {
             this.headers = headers;
             this.data = data;
@@ -43,7 +43,7 @@ namespace FlipTablesNet
             columnWidths = new int[columns];
             for (int row = -1; row < data.Length; row++)
             {
-                String[] rowData = (row == -1) ? headers : data[row]; // Hack to parse headers too.
+                string[] rowData = (row == -1) ? headers : data[row]; // Hack to parse headers too.
                 if (rowData.Length != columns)
                 {
                     throw new ArgumentException(
@@ -51,7 +51,7 @@ namespace FlipTablesNet
                 }
                 for (int column = 0; column < columns; column++)
                 {
-                    foreach (String rowDataLine in rowData[column].Split('\n'))
+                    foreach (string rowDataLine in rowData[column].Split('\n'))
                     {
                         columnWidths[column] = Math.Max(columnWidths[column], rowDataLine.Length);
                     }
@@ -71,7 +71,7 @@ namespace FlipTablesNet
             }
         }
 
-        public override String ToString()
+        public override string ToString()
         {
             var builder = new StringBuilder();
             //printDivider(builder, "╔═╤═╗");
