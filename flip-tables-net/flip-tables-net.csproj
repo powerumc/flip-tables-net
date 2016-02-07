@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="FlipTables.cs" />
     <Compile Include="FlipTablesExtensions.cs" />
+    <Compile Include="FlipTablesPad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

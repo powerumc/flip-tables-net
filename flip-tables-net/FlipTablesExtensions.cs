@@ -5,8 +5,9 @@ using System.Data;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
+using FlipTablesNet;
 
-namespace FlipTablesNet
+namespace System
 {
     public static class FlipTablesExtensions
     {
@@ -61,7 +62,7 @@ namespace FlipTablesNet
 			foreach (var header in headerProperty)
 		    {
 			    var value = header.GetValue(obj, null);
-			    var type = value.GetType();
+			    var type = (value ?? "(null)").GetType();
 			    if (type != typeof(string) && type.IsClass)
 			    {
 				    value = FlipTablesFromObject(value);

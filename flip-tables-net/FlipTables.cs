@@ -17,26 +17,28 @@ namespace FlipTablesNet
  */
     public sealed partial class FlipTable
     {
-        private static string EMPTY = "(empty)";
+	    private readonly FlipTablesPad pad;
+	    private static readonly string EMPTY = "(empty)";
 
         /** Create a new table with the specified headers and row data. */
-        public static string Of(string[] headers, string[][] data)
+        public static string Of(string[] headers, string[][] data, FlipTablesPad pad = FlipTablesPad.Right)
         {
             if (headers == null) throw new NullReferenceException("headers == null");
             if (headers.Length == 0) throw new ArgumentException("Headers must not be empty.");
             if (data == null) throw new NullReferenceException("data == null");
-            return new FlipTable(headers, data).ToString();
+            return new FlipTable(headers, data, pad).ToString();
         }
 
-        private string[] headers;
-        private string[][] data;
-        private int columns;
-        private int[] columnWidths;
-        private int emptyWidth;
+        private readonly string[] headers;
+        private readonly string[][] data;
+        private readonly int columns;
+        private readonly int[] columnWidths;
+        private readonly int emptyWidth;
 
-        private FlipTable(string[] headers, string[][] data)
+        private FlipTable(string[] headers, string[][] data, FlipTablesPad pad)
         {
-            this.headers = headers;
+	        this.pad = pad;
+	        this.headers = headers;
             this.data = data;
 
             columns = headers.Length;
@@ -71,24 +73,38 @@ namespace FlipTablesNet
             }
         }
 
+	    private string padding(string str, int totalWidth)
+	    {
+		    switch (this.pad)
+		    {
+			    case FlipTablesPad.Left:
+				    return str.PadLeft(totalWidth);
+
+			    case FlipTablesPad.Right:
+				    return str.PadRight(totalWidth);
+		    }
+
+		    return str.PadLeft(totalWidth);
+	    }
+
         public override string ToString()
         {
             var builder = new StringBuilder();
             //printDivider(builder, "╔═╤═╗");
-	        if (data.Length != 0)
-	        {
+	        //if (data.Length != 0)
+	        //{
 		        printDivider(builder, "+=+=+");
 		        printData(builder, headers);
-	        }
+	        //}
 	        if (data.Length == 0)
             {
-                ////printDivider(builder, "╠═╧═╣");
-                //  printDivider(builder, "+=+=+");
-                ////builder.Append('║').Append(pad(emptyWidth, EMPTY)).Append("║\n");
-	            builder.Append(EMPTY.PadLeft(0));
-	            ////printDivider(builder, "╚═══╝");
-	            //  printDivider(builder, "+===+");
-            }
+				//printDivider(builder, "╠═╧═╣");
+				printDivider(builder, "+=+=+");
+				//builder.Append('║').Append(pad(emptyWidth, EMPTY)).Append("║\n");
+				builder.Append("|").Append(padding(EMPTY, emptyWidth)).Append("|\n");
+				//printDivider(builder, "╚═══╝");
+				printDivider(builder, "+===+");
+			}
             else {
                 for (int row = 0; row < data.Length; row++)
                 {
@@ -106,11 +122,11 @@ namespace FlipTablesNet
         {
             for (int column = 0; column < columns; column++)
             {
-                @out.Append(column == 0 ? format.CharAt(0) : format.CharAt(2)).Append(format.CharAt(1)).Append(format.CharAt(1));
+                @out.Append(column == 0 ? format[0] : format[2]).Append(format[1]).Append(format[1]);
                 //@out.Append(pad(columnWidths[column], "").Replace(' ', format.CharAt(1)));
-                @out.Append("".PadLeft(columnWidths[column]).Replace(' ', format.CharAt(1)));
+                @out.Append(padding("", columnWidths[column]).Replace(' ', format[1]));
             }
-            @out.Append(format.CharAt(4)).Append('\n');
+            @out.Append(format[4]).Append('\n');
         }
 
         private void printData(StringBuilder @out, string[] data)
@@ -120,24 +136,16 @@ namespace FlipTablesNet
                 for (int column = 0; column < columns; column++)
                 {
                     @out.Append(column == 0 ? "|" : "|");
-                    var cellLines = data[column].Split('\n');
+                    var cellLines = (data[column] ?? "").Split('\n');
                     lines = Math.Max(lines, cellLines.Length);
                     var cellLine = line < cellLines.Length ? cellLines[line] ?? "(null)" : "";
                     //@out.Append(pad(columnWidths[column], cellLine));
                     //@out.Append(cellLine.PadLeft(columnWidths[column]));
-                    @out.Append(' ').Append(cellLine.PadLeft(columnWidths[column])).Append(' ');
+                    @out.Append(' ').Append(padding(cellLine, columnWidths[column])).Append(' ');
                 }
                 //@out.Append("║\n");
                 @out.Append("|\n");
             }
-        }
-    }
-
-    public static class FlipTablesStringExtensions
-    {
-        public static char CharAt(this string str, int index)
-        {
-            return str[index];
         }
     }
 }
