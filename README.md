@@ -143,7 +143,7 @@ var person2 = new Person2()
     Name = new Name("Junil", "Um"),
     Age = 37
 };
-Console.WriteLine(person2.FlipTablesFromObject());
+Console.WriteLine(person2.FlipTablesFrom());
 ```
 
 ```
