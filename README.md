@@ -4,6 +4,20 @@ flip-tables-net
 Flip-Tables-Net converted from flip-table in Java code, should be make pretty-tables on console.
 
 
+### Installation
+
+in the command line
+```cmd
+nuget install flip-tables-net
+```
+
+or in the visual studio package manager console.
+
+```cmd
+Install-Package Flip-Tables-Net
+```
+
+
 Usage likes Java
 -----------------
 A `FlipTable` requires headers and data in string form:
