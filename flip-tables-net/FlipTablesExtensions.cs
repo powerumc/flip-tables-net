@@ -11,7 +11,7 @@ namespace System
 {
     public static class FlipTablesExtensions
     {
-	    public static string FlipTablesFrom(this object obj)
+	    public static string FlipTablesFrom(this object obj, FlipTablesPad pad = FlipTablesPad.Left)
 	    {
 		    var ret = "";
 		    if (!obj.GetType().IsPrimitive && obj.GetType() != typeof(string) && obj is IEnumerable)
@@ -34,7 +34,7 @@ namespace System
 					    var value = header.GetValue(current, null) ?? "(null)";
 					    if (!value.GetType().IsPrimitive && value.GetType() != typeof(string) && value is IEnumerable)
 					    {
-						    value = FlipTablesFrom(value);
+						    value = FlipTablesFrom(value, pad);
 					    }
 
 					    data.Add(value.ToString());
@@ -43,18 +43,18 @@ namespace System
 				    list.Add(data.ToArray());
 			    } while (enumerator.MoveNext());
 
-			    ret += FlipTable.Of(headerProperty.Select(o => o.Name).ToArray(), list.ToArray());
+			    ret += FlipTable.Of(headerProperty.Select(o => o.Name).ToArray(), list.ToArray(), pad);
 
 		    }
 		    else if (!obj.GetType().IsPrimitive && obj.GetType() != typeof(string) && obj.GetType().IsClass)
 		    {
-			    ret += FlipTablesFromObject(obj);
+			    ret += FlipTablesFromObject(obj, pad);
 		    }
 
 		    return ret;
 	    }
 
-	    internal static string FlipTablesFromObject<T>(this T obj) where T : class
+	    internal static string FlipTablesFromObject<T>(this T obj, FlipTablesPad pad = FlipTablesPad.Left) where T : class
 	    {
 		    var headerProperty = obj.GetType().GetProperties();
 
@@ -65,28 +65,28 @@ namespace System
 			    var type = (value ?? "(null)").GetType();
 			    if (type != typeof(string) && type.IsClass)
 			    {
-				    value = FlipTablesFromObject(value);
+				    value = FlipTablesFromObject(value, pad);
 			    }
 
 				data.Add((value ?? "(null)").ToString());
 		    }
 
-		    return FlipTable.Of(headerProperty.Select(o => o.Name).ToArray(), new[] {data.ToArray()});
+		    return FlipTable.Of(headerProperty.Select(o => o.Name).ToArray(), new[] {data.ToArray()}, pad);
 	    }
 
-	    public static string FlipTablesFrom(this DataTable dataTable)
+	    public static string FlipTablesFrom(this DataTable dataTable, FlipTablesPad pad = FlipTablesPad.Left)
 	    {
 		    var headers = dataTable.Columns.OfType<DataColumn>().AsEnumerable().Select(o => o.ColumnName).ToArray();
 		    return FlipTable.Of(headers,
 			    (from DataRow r in dataTable.Rows select headers.Select(h => r[h].ToString()).ToArray()).ToArray());
 	    }
 
-	    public static string FlipTablesFrom(this DataSet dataSet)
+	    public static string FlipTablesFrom(this DataSet dataSet, FlipTablesPad pad = FlipTablesPad.Left)
 	    {
 		    var sb = new StringBuilder(1024);
 		    foreach (DataTable dt in dataSet.Tables)
 		    {
-			    sb.AppendLine(FlipTablesFrom(dt));
+			    sb.AppendLine(FlipTablesFrom(dt, pad));
 		    }
 		    sb.AppendLine();
 

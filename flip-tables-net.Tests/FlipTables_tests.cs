@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace flip_tables_net.Tests
 {
 	[TestClass]
-	public class UnitTest1
+	public class FlipTables_tests
 	{
 		[TestMethod]
 		public void TestMethod1()
@@ -18,6 +18,14 @@ namespace flip_tables_net.Tests
 				{
 					new[] {"Foo", "Bar"},
 					new[] {"Kit", "Kat"}
+				};
+				Console.WriteLine(FlipTable.Of(headers, data));
+			}
+
+			{
+				string[] headers = { "Test", "Header" };
+				string[][] data =
+				{
 				};
 				Console.WriteLine(FlipTable.Of(headers, data));
 			}
@@ -43,7 +51,7 @@ namespace flip_tables_net.Tests
 					new Person("Junil", "Um", 37),
 				};
 				personList[0].Children.Add(new Person("A", "B", 12));
-				Console.WriteLine(personList.FlipTablesFrom());
+				Console.WriteLine(personList.FlipTablesFrom(FlipTablesPad.Right));
 			}
 
 			{
@@ -63,10 +71,19 @@ namespace flip_tables_net.Tests
 			{
 				var person2 = new Person2()
 				{
-					Name = new Name("Junil", "Um"),
+					Name = new Name("Junil", null),
 					Age = 37
 				};
 				Console.WriteLine(person2.FlipTablesFrom());
+			}
+
+			{
+				var person2 = new Person2()
+				{
+					Name = new Name("Junil", null),
+					Age = 37
+				};
+				Console.WriteLine(person2.FlipTablesFrom(FlipTablesPad.Right));
 			}
 		}
 	}

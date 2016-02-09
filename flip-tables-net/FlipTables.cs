@@ -21,7 +21,7 @@ namespace FlipTablesNet
 	    private static readonly string EMPTY = "(empty)";
 
         /** Create a new table with the specified headers and row data. */
-        public static string Of(string[] headers, string[][] data, FlipTablesPad pad = FlipTablesPad.Right)
+        public static string Of(string[] headers, string[][] data, FlipTablesPad pad = FlipTablesPad.Left)
         {
             if (headers == null) throw new NullReferenceException("headers == null");
             if (headers.Length == 0) throw new ArgumentException("Headers must not be empty.");
@@ -77,10 +77,10 @@ namespace FlipTablesNet
 	    {
 		    switch (this.pad)
 		    {
-			    case FlipTablesPad.Left:
+			    case FlipTablesPad.Right:
 				    return str.PadLeft(totalWidth);
 
-			    case FlipTablesPad.Right:
+			    case FlipTablesPad.Left:
 				    return str.PadRight(totalWidth);
 		    }
 

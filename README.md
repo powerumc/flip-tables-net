@@ -22,9 +22,9 @@ Console.WriteLine(FlipTable.Of(headers, data));
 +======+========+
 | Test | Header |
 +======+========+
-|  Foo |    Bar |
+| Foo  | Bar    |
 +------+--------+
-|  Kit |    Kat |
+| Kit  | Kat    |
 +======+========+
 ```
 
@@ -36,10 +36,10 @@ Console.WriteLine(FlipTable.Of(headers, data));
 ```
 ```
 +=========+=============+
-| One Two |        Four |
-|   Three |             |
+| One Two | Four        |
+| Three   |             |
 +=========+=============+
-|    Five |         Six |
+| Five    | Six         |
 |         | Seven Eight |
 +=========+=============+
 ```
@@ -56,12 +56,12 @@ Console.WriteLine(FlipTable.Of(headers, data));
 ```
 ```
 +===============+===============+
-|          Left |         Right |
+| Left          | Right         |
 +===============+===============+
 | +=====+=====+ | +=====+=====+ |
 | | One | Two | | | One | Two | |
 | +=====+=====+ | +=====+=====+ |
-| |   1 |   2 | | |   1 |   2 | |
+| | 1   | 2   | | | 1   |   2 | |
 | +=====+=====+ | +=====+=====+ |
 |               |               |
 +===============+===============+
@@ -89,7 +89,7 @@ Console.WriteLine(dt.FlipTablesFrom());
 +===========+==========+=====+
 | FirstName | LastName | Age |
 +===========+==========+=====+
-|     Junil |       Um |  37 |
+| Junil     | Um       | 37  |
 +===========+==========+=====+
 ```
 
@@ -148,9 +148,9 @@ Console.WriteLine(person2.FlipTablesFrom());
 
 ```
 +==================+=====+
-|             Name | Age |
+| Name             | Age |
 +==================+=====+
-| +=======+======+ |  37 |
+| +=======+======+ | 37  |
 | | First | Last | |     |
 | +=======+======+ |     |
 | | Junil |   Um | |     |
@@ -172,7 +172,7 @@ Console.WriteLine(personList.FlipTablesFrom());
 
 ```
 +===========+==========+=====+==============================================================+==================+
-| FirstName | LastName | Age |                                                     Children |            Names |
+| FirstName | LastName | Age | Children                                                     | Names            |
 +===========+==========+=====+==============================================================+==================+
 |     Junil |       Um |  37 | +===========+==========+=====+==========+==================+ | +=======+======+ |
 |           |          |     | | FirstName | LastName | Age | Children |            Names | | | First | Last | |
@@ -186,4 +186,29 @@ Console.WriteLine(personList.FlipTablesFrom());
 |           |          |     | +===========+==========+=====+==========+==================+ |                  |
 |           |          |     |                                                              |                  |
 +===========+==========+=====+==============================================================+==================+
+```
+
+
+`FlipTablePad` options
+
+```chsarp
+var person2 = new Person2()
+{
+	Name = new Name("Junil", null),
+	Age = 37
+};
+Console.WriteLine(person2.FlipTablesFrom(FlipTablesPad.Right));
+```
+
+```
++====================+=====+
+|               Name | Age |
++====================+=====+
+| +=======+========+ |  37 |
+| | First |   Last | |     |
+| +=======+========+ |     |
+| | Junil | (null) | |     |
+| +=======+========+ |     |
+|                    |     |
++====================+=====+
 ```
