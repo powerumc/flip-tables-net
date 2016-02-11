@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -27,6 +29,91 @@ namespace FlipTablesNet
             if (headers.Length == 0) throw new ArgumentException("Headers must not be empty.");
             if (data == null) throw new NullReferenceException("data == null");
             return new FlipTable(headers, data, pad).ToString();
+        }
+
+
+
+        public static string Of(object obj, FlipTablesPad pad)
+        {
+            var ret = "";
+            if (!obj.GetType().IsPrimitive && obj.GetType() != typeof(string) && obj is IEnumerable)
+            {
+                var enumerable = (IEnumerable)obj;
+                var enumerator = enumerable.GetEnumerator();
+                var list = new List<string[]>();
+
+                var can = enumerator.MoveNext();
+                if (!can) return "";
+
+                var current = enumerator.Current;
+                var headerProperty = current.GetType().GetProperties();
+
+                do
+                {
+                    var data = new List<string>();
+                    foreach (var header in headerProperty)
+                    {
+                        var value = header.GetValue(current, null) ?? "(null)";
+                        if (!value.GetType().IsPrimitive && value.GetType() != typeof(string) && value is IEnumerable)
+                        {
+                            value = Of(value, pad);
+                        }
+
+                        data.Add(value.ToString());
+                    }
+
+                    list.Add(data.ToArray());
+                } while (enumerator.MoveNext());
+
+                ret += Of(headerProperty.Select(o => o.Name).ToArray(), list.ToArray(), pad);
+
+            }
+            else if (!obj.GetType().IsPrimitive && obj.GetType() != typeof(string) && obj.GetType().IsClass)
+            {
+                ret += Of<object>(obj, pad);
+            }
+
+            return ret;
+        }
+
+        private static string Of<T>(T obj, FlipTablesPad pad) where T : class
+        {
+            var headerProperty = obj.GetType().GetProperties();
+
+            var data = new List<string>();
+            foreach (var header in headerProperty)
+            {
+                var value = header.GetValue(obj, null);
+                var type = (value ?? "(null)").GetType();
+                if (type != typeof(string) && type.IsClass)
+                {
+                    value = Of(value, pad);
+                }
+
+                data.Add((value ?? "(null)").ToString());
+            }
+
+            return Of(headerProperty.Select(o => o.Name).ToArray(), new[] { data.ToArray() }, pad);
+        }
+
+
+        public static string Of(DataTable dataTable, FlipTablesPad pad)
+        {
+            var headers = dataTable.Columns.OfType<DataColumn>().AsEnumerable().Select(o => o.ColumnName).ToArray();
+            return FlipTable.Of(headers,
+                (from DataRow r in dataTable.Rows select headers.Select(h => r[h].ToString()).ToArray()).ToArray(), pad);
+        }
+
+        public static string Of(DataSet dataSet, FlipTablesPad pad)
+        {
+            var sb = new StringBuilder(1024);
+            foreach (DataTable dt in dataSet.Tables)
+            {
+                sb.AppendLine(Of(dt, pad));
+            }
+            sb.AppendLine();
+
+            return sb.ToString();
         }
 
         private readonly string[] headers;
