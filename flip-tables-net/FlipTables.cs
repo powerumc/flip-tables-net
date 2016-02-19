@@ -11,7 +11,7 @@ namespace FlipTablesNet
 /**
  * <pre>
  * ╔═════════════╤════════════════════════════╤══════════════╗
- * ║ Name        │ Function                   │ Author     ║
+ * ║ Name        │ Function                   │ Author       ║
  * ╠═════════════╪════════════════════════════╪══════════════╣
  * ║ Flip Tables │ Pretty-print a text table. │ Jake Wharton ║
  * ╚═════════════╧════════════════════════════╧══════════════╝
