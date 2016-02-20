@@ -22,7 +22,7 @@ Usage likes Java
 -----------------
 A `FlipTable` requires headers and data in string form:
 
-```csharp
+```C#
 string[] headers = { "Test", "Header" };
 string[][] data =
 {
@@ -43,7 +43,7 @@ Console.WriteLine(FlipTable.Of(headers, data));
 ```
 
 New lines are supported
-```chsarp
+```C#
 string[] headers = { "One Two\nThree", "Four" };
 string[][] data = { new[] { "Five", "Six\nSeven Eight" } };
 Console.WriteLine(FlipTable.Of(headers, data));
@@ -60,7 +60,7 @@ Console.WriteLine(FlipTable.Of(headers, data));
 
 which means tables can be nested.
 
-```chsarp
+```C#
 string[] innerHeaders = { "One", "Two" };
 string[][] innerData = { new[] { "1", "2" } };
 string inner = FlipTable.Of(innerHeaders, innerData);
@@ -86,7 +86,7 @@ For the .NET
 flip-tables-net version supported .NET specification objects.
 
 From .NET `DataTable` or `DataSet` object.
-```chsarp
+```C#
 var dt = new DataTable();
 dt.Columns.Add("FirstName");
 dt.Columns.Add("LastName");
@@ -109,7 +109,7 @@ Console.WriteLine(dt.FlipTablesFrom());
 
 From .NET `nested entity object`
 First, Entity model classes is:
-```chsarp
+```C#
 public class Person
 {
     public string FirstName { get; set; }
@@ -151,7 +151,7 @@ public class Name
 ```
 
 
-```chsarp
+```C#
 var person2 = new Person2()
 {
     Name = new Name("Junil", "Um"),
@@ -174,7 +174,7 @@ Console.WriteLine(person2.FlipTablesFrom());
 ```
 
 Complex objects contains `entity model` and `List<>` objects.
-```chsarp
+```C#
 var personList = new List<Person>
 {
     new Person("Junil", "Um", 37),
@@ -205,7 +205,7 @@ Console.WriteLine(personList.FlipTablesFrom());
 
 `FlipTablePad` options
 
-```chsarp
+```C#
 var person2 = new Person2()
 {
 	Name = new Name("Junil", null),
