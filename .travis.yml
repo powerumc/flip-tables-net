@@ -1,4 +1,2 @@
 language: csharp
 solution: flip-tables-net.sln
-mono:
-  - latest
